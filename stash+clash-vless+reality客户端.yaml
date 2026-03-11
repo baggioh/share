@@ -22,9 +22,9 @@ dns:
 proxies:
   - name: Reality-VLESS
     type: vless
-    server: 202.91.34.226
+    server:
     port: 42147
-    uuid: d976ef13-b495-4926-8633-bf00048e08d0
+    uuid: 
     network: tcp
     udp: true
     tls: true
@@ -34,7 +34,7 @@ proxies:
     client-fingerprint: chrome
 
     reality-opts:
-      public-key: zX2-cyTjsKzyF3iVbe2-cdpEYlMNqnUyUULG8ZxxSjs
+      public-key: 
       short-id: 190fda
 
 proxy-groups:
