@@ -1,0 +1,98 @@
+mixed-port: 2080
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: false
+
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+
+  nameserver:
+    - https://1.1.1.1/dns-query
+    - https://8.8.8.8/dns-query
+    - 138.2.89.178
+
+  fallback:
+    - 8.8.8.8
+    - 1.1.1.1
+
+proxies:
+  - name: Reality-VLESS
+    type: vless
+    server: 202.91.34.226
+    port: 42147
+    uuid: d976ef13-b495-4926-8633-bf00048e08d0
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+
+    servername: www.microsoft.com
+    client-fingerprint: chrome
+
+    reality-opts:
+      public-key: zX2-cyTjsKzyF3iVbe2-cdpEYlMNqnUyUULG8ZxxSjs
+      short-id: 190fda
+
+proxy-groups:
+
+  - name: Proxy
+    type: select
+    proxies:
+      - Reality-VLESS
+      - DIRECT
+
+  - name: Streaming
+    type: select
+    proxies:
+      - Proxy
+      - DIRECT
+
+rules:
+
+# Bilibili
+  - DOMAIN-SUFFIX,bilibili.com,DIRECT
+  - DOMAIN-SUFFIX,biliapi.com,DIRECT
+  - DOMAIN-SUFFIX,biliapi.net,DIRECT
+  - DOMAIN-SUFFIX,hdslb.com,DIRECT
+  - DOMAIN-KEYWORD,bilibili,DIRECT
+
+# Apple
+  - DOMAIN-SUFFIX,apple.com,DIRECT
+  - DOMAIN-SUFFIX,icloud.com,DIRECT
+  - DOMAIN-SUFFIX,itunes.apple.com,DIRECT
+  - DOMAIN-SUFFIX,mzstatic.com,DIRECT
+  - DOMAIN-KEYWORD,icloud,DIRECT
+
+# 国内直连
+  - DOMAIN-SUFFIX,wtmdjxkq.com,DIRECT
+  - DOMAIN-SUFFIX,wuchajian.xyz,DIRECT
+  - DOMAIN-SUFFIX,yoozb.live,DIRECT
+  - GEOIP,CN,DIRECT
+
+# Netflix
+  - DOMAIN-SUFFIX,netflix.com,Streaming
+  - DOMAIN-SUFFIX,nflxvideo.net,Streaming
+
+# YouTube
+  - DOMAIN-SUFFIX,youtube.com,Proxy
+  - DOMAIN-SUFFIX,googlevideo.com,Proxy
+  - DOMAIN-SUFFIX,ytimg.com,Proxy
+  - DOMAIN-SUFFIX,ggpht.com,Proxy
+  - DOMAIN-KEYWORD,youtube,Proxy
+  - DOMAIN-KEYWORD,google_video,Proxy
+
+# ChatGPT
+  - DOMAIN-SUFFIX,openai.com,Proxy
+  - DOMAIN-SUFFIX,chatgpt.com,Proxy
+
+# 广告拦截
+  - DOMAIN-SUFFIX,doubleclick.net,REJECT
+  - DOMAIN-SUFFIX,googlesyndication.com,REJECT
+  - DOMAIN-SUFFIX,adservice.google.com,REJECT
+
+# 默认
+  - MATCH,Proxy
