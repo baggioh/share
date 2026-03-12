@@ -16,6 +16,13 @@ dns:
     - https://8.8.8.8/dns-query
     - 138.2.89.178
 
+  nameserver-policy:
+    "+.wechat.com": 223.5.5.5
+    "+.weixin.com": 223.5.5.5
+    "+.wechat.io": 223.5.5.5
+    "+.weixin.qq.com": 223.5.5.5
+    "short.weixin.qq.com": 223.5.5.5
+
   fallback:
     - 8.8.8.8
     - 1.1.1.1
@@ -23,9 +30,9 @@ dns:
 proxies:
   - name: Reality-VLESS
     type: vless
-    server: 
+    server: 202.91.34.226
     port: 42147
-    uuid: 
+    uuid: d976ef13-b495-4926-8633-bf00048e08d0
     network: tcp
     udp: true
     tls: true
@@ -35,7 +42,7 @@ proxies:
     client-fingerprint: chrome
 
     reality-opts:
-      public-key: 
+      public-key: zX2-cyTjsKzyF3iVbe2-cdpEYlMNqnUyUULG8ZxxSjs
       short-id: 190fda
 
 proxy-groups:
@@ -56,12 +63,18 @@ rules:
 
 # WeChat
   - DOMAIN-SUFFIX,wechat.com,DIRECT
+  - DOMAIN-SUFFIX,wechatimg.com,DIRECT
+  - DOMAIN-SUFFIX,weixin.com,DIRECT
   - DOMAIN-SUFFIX,weixin.qq.com,DIRECT
   - DOMAIN-SUFFIX,qpic.cn,DIRECT
+  - DOMAIN-SUFFIX,qlogo.cn,DIRECT
+  - DOMAIN-SUFFIX,wx.qlogo.cn,DIRECT
   - DOMAIN-SUFFIX,wx.qq.com,DIRECT
   - DOMAIN-SUFFIX,wx2.qq.com,DIRECT
-  - DOMAIN-SUFFIX,wechatimg.com,DIRECT
-  - DOMAIN-SUFFIX,wx.qlogo.cn,DIRECT
+  - DOMAIN-SUFFIX,servicewechat.com,DIRECT
+  - DOMAIN-KEYWORD,tencent,DIRECT
+  - DOMAIN-KEYWORD,gtimg,DIRECT
+
 
 # Bilibili
   - DOMAIN-SUFFIX,bilibili.com,DIRECT
