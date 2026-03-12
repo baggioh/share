@@ -1,3 +1,4 @@
+
 mixed-port: 2080
 allow-lan: true
 mode: rule
@@ -22,7 +23,7 @@ dns:
 proxies:
   - name: Reality-VLESS
     type: vless
-    server:
+    server: 
     port: 42147
     uuid: 
     network: tcp
@@ -53,6 +54,15 @@ proxy-groups:
 
 rules:
 
+# WeChat
+  - DOMAIN-SUFFIX,wechat.com,DIRECT
+  - DOMAIN-SUFFIX,weixin.qq.com,DIRECT
+  - DOMAIN-SUFFIX,qpic.cn,DIRECT
+  - DOMAIN-SUFFIX,wx.qq.com,DIRECT
+  - DOMAIN-SUFFIX,wx2.qq.com,DIRECT
+  - DOMAIN-SUFFIX,wechatimg.com,DIRECT
+  - DOMAIN-SUFFIX,wx.qlogo.cn,DIRECT
+
 # Bilibili
   - DOMAIN-SUFFIX,bilibili.com,DIRECT
   - DOMAIN-SUFFIX,biliapi.com,DIRECT
@@ -65,12 +75,16 @@ rules:
   - DOMAIN-SUFFIX,icloud.com,DIRECT
   - DOMAIN-SUFFIX,itunes.apple.com,DIRECT
   - DOMAIN-SUFFIX,mzstatic.com,DIRECT
+  - DOMAIN-SUFFIX,appleusercontent.com,DIRECT
+  - DOMAIN-SUFFIX,cdn-apple.com,DIRECT
   - DOMAIN-KEYWORD,icloud,DIRECT
 
-# 国内直连
+# 无插件直播
   - DOMAIN-SUFFIX,wtmdjxkq.com,DIRECT
   - DOMAIN-SUFFIX,wuchajian.xyz,DIRECT
   - DOMAIN-SUFFIX,yoozb.live,DIRECT
+  
+# 国内直连
   - GEOIP,CN,DIRECT
 
 # Netflix
