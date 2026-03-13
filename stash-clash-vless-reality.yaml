@@ -12,9 +12,8 @@ dns:
   fake-ip-range: 198.18.0.1/16
 
   nameserver:
-    - https://1.1.1.1/dns-query
-    - https://8.8.8.8/dns-query
-    - 138.2.89.178
+    - 1.1.1.1
+    - 8.8.8.8
 
   nameserver-policy:
     "+.wechat.com": 223.5.5.5
@@ -24,15 +23,15 @@ dns:
     "short.weixin.qq.com": 223.5.5.5
 
   fallback:
-    - 8.8.8.8
     - 1.1.1.1
+    - 8.8.8.8
 
 proxies:
   - name: Reality-VLESS
     type: vless
-    server: 
+    server: 202.91.34.226
     port: 42147
-    uuid: 
+    uuid: d976ef13-b495-4926-8633-bf00048e08d0
     network: tcp
     udp: true
     tls: true
@@ -42,7 +41,7 @@ proxies:
     client-fingerprint: chrome
 
     reality-opts:
-      public-key: 
+      public-key: zX2-cyTjsKzyF3iVbe2-cdpEYlMNqnUyUULG8ZxxSjs
       short-id: 190fda
 
 proxy-groups:
@@ -51,12 +50,6 @@ proxy-groups:
     type: select
     proxies:
       - Reality-VLESS
-      - DIRECT
-
-  - name: Streaming
-    type: select
-    proxies:
-      - Proxy
       - DIRECT
 
 rules:
@@ -101,8 +94,8 @@ rules:
   - GEOIP,CN,DIRECT
 
 # Netflix
-  - DOMAIN-SUFFIX,netflix.com,Streaming
-  - DOMAIN-SUFFIX,nflxvideo.net,Streaming
+  - DOMAIN-SUFFIX,netflix.com,Proxy
+  - DOMAIN-SUFFIX,nflxvideo.net,Proxy
 
 # YouTube
   - DOMAIN-SUFFIX,youtube.com,Proxy
