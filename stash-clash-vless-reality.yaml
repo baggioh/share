@@ -10,28 +10,33 @@ dns:
   ipv6: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*.lan"
+    - "*.local"
+    - "localhost.ptlogin2.qq.com"
 
   nameserver:
-    - 1.1.1.1
-    - 8.8.8.8
-
-  nameserver-policy:
-    "+.wechat.com": 223.5.5.5
-    "+.weixin.com": 223.5.5.5
-    "+.wechat.io": 223.5.5.5
-    "+.weixin.qq.com": 223.5.5.5
-    "short.weixin.qq.com": 223.5.5.5
+    - https://doh.pub/dns-query          # 腾讯 DoH
+    - https://dns.alidns.com/dns-query   # 阿里 DoH
+    - 114.114.114.114
 
   fallback:
-    - 1.1.1.1
-    - 8.8.8.8
+    - https://dns.google/dns-query       # Google DoH
+    - https://cloudflare-dns.com/dns-query
+    - tls://8.8.4.4:853
+
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
 
 proxies:
-  - name: Reality-VLESS
+  - name: PROXY
     type: vless
-    server: 
+    server: 202.91.34.226
     port: 42147
-    uuid: 
+    uuid: d976ef13-b495-4926-8633-bf00048e08d0
     network: tcp
     udp: true
     tls: true
@@ -41,15 +46,15 @@ proxies:
     client-fingerprint: chrome
 
     reality-opts:
-      public-key: 
+      public-key: zX2-cyTjsKzyF3iVbe2-cdpEYlMNqnUyUULG8ZxxSjs
       short-id: 190fda
 
 proxy-groups:
 
-  - name: Proxy
+  - name: GROUPS
     type: select
     proxies:
-      - Reality-VLESS
+      - PROXY
       - DIRECT
 
 rules:
@@ -89,30 +94,49 @@ rules:
   - DOMAIN-SUFFIX,wtmdjxkq.com,DIRECT
   - DOMAIN-SUFFIX,wuchajian.xyz,DIRECT
   - DOMAIN-SUFFIX,yoozb.live,DIRECT
+
+# 咪咕视频
+  - DOMAIN-SUFFIX,migu.cn,DIRECT
+  - DOMAIN-SUFFIX,miguvideo.com,DIRECT
+  - DOMAIN-SUFFIX,cmvideo.cn,DIRECT
+  - DOMAIN,sdc3.10086.cn,DIRECT
+
+# 游侠星空
+  - DOMAIN-SUFFIX,gamersky.com,DIRECT
+  - DOMAIN-SUFFIX,gamersky.net,DIRECT
   
 # 国内直连
   - GEOIP,CN,DIRECT
 
+# 投屏直连
+  - GEOIP,LAN,DIRECT
+
 # Netflix
-  - DOMAIN-SUFFIX,netflix.com,Proxy
-  - DOMAIN-SUFFIX,nflxvideo.net,Proxy
+  - DOMAIN-SUFFIX,netflix.com,PROXY
+  - DOMAIN-SUFFIX,nflxvideo.net,PROXY
 
 # YouTube
-  - DOMAIN-SUFFIX,youtube.com,Proxy
-  - DOMAIN-SUFFIX,googlevideo.com,Proxy
-  - DOMAIN-SUFFIX,ytimg.com,Proxy
-  - DOMAIN-SUFFIX,ggpht.com,Proxy
-  - DOMAIN-KEYWORD,youtube,Proxy
-  - DOMAIN-KEYWORD,google_video,Proxy
+  - DOMAIN-SUFFIX,youtube.com,PROXY
+  - DOMAIN-SUFFIX,googlevideo.com,PROXY
+  - DOMAIN-SUFFIX,ytimg.com,PROXY
+  - DOMAIN-SUFFIX,ggpht.com,PROXY
+  - DOMAIN-KEYWORD,youtube,PROXY
+  - DOMAIN-KEYWORD,google_video,PROXY
 
 # ChatGPT
-  - DOMAIN-SUFFIX,openai.com,Proxy
-  - DOMAIN-SUFFIX,chatgpt.com,Proxy
+  - DOMAIN-SUFFIX,openai.com,PROXY
+  - DOMAIN-SUFFIX,chatgpt.com,PROXY
+
+# 拦截广告与数据上报
+  - DOMAIN,tk.anythinktech.com,REJECT
+  - DOMAIN-keyword,pangolin-sdk,REJECT
+  - DOMAIN-SUFFIX,hookspf.com,REJECT
 
 # 广告拦截
   - DOMAIN-SUFFIX,doubleclick.net,REJECT
   - DOMAIN-SUFFIX,googlesyndication.com,REJECT
   - DOMAIN-SUFFIX,adservice.google.com,REJECT
 
+
 # 默认
-  - MATCH,Proxy
+  - MATCH,PROXY
