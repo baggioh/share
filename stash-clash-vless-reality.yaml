@@ -34,7 +34,7 @@ dns:
 proxies:
   - name: PROXY
     type: vless
-    server: 202.91.34.226
+    server: 
     port: 42147
     uuid: d976ef13-b495-4926-8633-bf00048e08d0
     network: tcp
