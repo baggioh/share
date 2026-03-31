@@ -15,14 +15,17 @@ dns:
     - "localhost.ptlogin2.qq.com"
 
   nameserver:
-    - 119.29.29.29         # 腾讯
-    - 223.5.5.5   # 阿里
-    - 114.114.114.114
+    - 119.29.29.29          # 腾讯
+    - 233.5.5.5   # 阿里
+    - 8.8.8.8
+
+  nameserver-policy:
+    "geosite:cn": 223.5.5.5
+    "geosite:apple": 223.5.5.5 # 强制 Apple 走国内解析
 
   fallback:
     - https://8.8.8.8/dns-query       # Google DoH
     - https://1.1.1.1/dns-query
-    - tls://8.8.4.4:853
 
   fallback-filter:
     geoip: true
@@ -33,7 +36,7 @@ dns:
 proxies:
   - name: PROXY
     type: vless
-    server: 
+    server: 202.91.34.226
     port: 42147
     uuid: d976ef13-b495-4926-8633-bf00048e08d0
     network: tcp
