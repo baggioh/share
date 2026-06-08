@@ -1,0 +1,143 @@
+mixed-port: 2080
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: false
+
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*.lan"
+    - "*.local"
+    - "localhost.ptlogin2.qq.com"
+
+  nameserver:
+    - 119.29.29.29          # 腾讯
+    - 223.5.5.5             # 阿里
+    - 8.8.8.8
+
+  nameserver-policy:
+    "geosite:cn": 223.5.5.5
+    "geosite:apple": 223.5.5.5 
+
+  fallback:
+    - https://8.8.8.8/dns-query       # Google DoH
+    - https://1.1.1.1/dns-query
+
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
+
+
+
+# ----------------- 你的物理基础节点 -----------------
+proxies:
+  - name: "Hostdare-CF-Tunnel"
+    type: vless
+    server: node.baggioh.dpdns.org
+    port: 443
+    uuid: 329c60ac-0b14-45ed-bd8a-b547a0576105
+    udp: true
+    tls: true
+    skip-cert-verify: false
+    servername: node.baggioh.dpdns.org
+    network: ws
+    ws-opts:
+      path: /baggioh
+      headers:
+        Host: node.baggioh.dpdns.org
+
+
+# ----------------- 策略组控制台 -----------------
+proxy-groups:
+  # 1. 总控制组（用来当做下面规则里写的 PROXY）
+  - name: PROXY
+    type: select
+    proxies:
+      - "Hostdare-CF-Tunnel"
+      - DIRECT
+
+
+
+rules:
+
+# WeChat
+  - DOMAIN-SUFFIX,wechat.com,DIRECT
+  - DOMAIN-SUFFIX,wechatimg.com,DIRECT
+  - DOMAIN-SUFFIX,weixin.com,DIRECT
+  - DOMAIN-SUFFIX,weixin.qq.com,DIRECT
+  - DOMAIN-SUFFIX,qpic.cn,DIRECT
+  - DOMAIN-SUFFIX,qlogo.cn,DIRECT
+  - DOMAIN-SUFFIX,wx.qlogo.cn,DIRECT
+  - DOMAIN-SUFFIX,wx.qq.com,DIRECT
+  - DOMAIN-SUFFIX,wx2.qq.com,DIRECT
+  - DOMAIN-SUFFIX,servicewechat.com,DIRECT
+  - DOMAIN-KEYWORD,tencent,DIRECT
+  - DOMAIN-KEYWORD,gtimg,DIRECT
+
+# Bilibili
+  - DOMAIN-SUFFIX,bilibili.com,DIRECT
+  - DOMAIN-SUFFIX,biliapi.com,DIRECT
+  - DOMAIN-SUFFIX,biliapi.net,DIRECT
+  - DOMAIN-SUFFIX,hdslb.com,DIRECT
+  - DOMAIN-KEYWORD,bilibili,DIRECT
+
+# Apple
+  - DOMAIN-SUFFIX,apple.com,DIRECT
+  - DOMAIN-SUFFIX,icloud.com,DIRECT
+  - DOMAIN-SUFFIX,itunes.apple.com,DIRECT
+  - DOMAIN-SUFFIX,mzstatic.com,DIRECT
+  - DOMAIN-SUFFIX,appleusercontent.com,DIRECT
+  - DOMAIN-SUFFIX,cdn-apple.com,DIRECT
+  - DOMAIN-KEYWORD,icloud,DIRECT
+
+# 无插件直播
+  - DOMAIN-SUFFIX,wtmdjxkq.com,DIRECT
+  - DOMAIN-SUFFIX,wuchajian.xyz,DIRECT
+  - DOMAIN-SUFFIX,yoozb.live,DIRECT
+
+# 咪咕视频
+  - DOMAIN-SUFFIX,migu.cn,DIRECT
+  - DOMAIN-SUFFIX,miguvideo.com,DIRECT
+  - DOMAIN-SUFFIX,cmvideo.cn,DIRECT
+  - DOMAIN,sdc3.10086.cn,DIRECT
+
+# 游侠星空
+  - DOMAIN-SUFFIX,gamersky.com,DIRECT
+  - DOMAIN-SUFFIX,gamersky.net,DIRECT
+  
+# Netflix
+  - DOMAIN-SUFFIX,netflix.com,PROXY
+  - DOMAIN-SUFFIX,nflxvideo.net,PROXY
+
+# YouTube
+  - DOMAIN-SUFFIX,youtube.com,PROXY
+  - DOMAIN-SUFFIX,googlevideo.com,PROXY
+  - DOMAIN-SUFFIX,ytimg.com,PROXY
+  - DOMAIN-SUFFIX,ggpht.com,PROXY
+  - DOMAIN-KEYWORD,youtube,PROXY
+  - DOMAIN-KEYWORD,google_video,PROXY
+
+# ChatGPT
+  - DOMAIN-SUFFIX,openai.com,PROXY
+  - DOMAIN-SUFFIX,chatgpt.com,PROXY
+
+# 广告拦截
+  - DOMAIN,tk.anythinktech.com,REJECT
+  - DOMAIN-KEYWORD,pangolin-sdk,REJECT
+  - DOMAIN-SUFFIX,hookspf.com,REJECT
+  - DOMAIN-SUFFIX,doubleclick.net,REJECT
+  - DOMAIN-SUFFIX,googlesyndication.com,REJECT
+  - DOMAIN-SUFFIX,adservice.google.com,REJECT
+
+# 局域网与国内
+  - GEOIP,LAN,DIRECT
+  - GEOIP,CN,DIRECT
+
+# 默认
+  - MATCH,PROXY
