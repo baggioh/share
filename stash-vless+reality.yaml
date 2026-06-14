@@ -1,0 +1,116 @@
+mixed-port: 2080
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: false
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - '*.lan'
+    - '*.local'
+    - localhost.ptlogin2.qq.com
+  nameserver:
+    - 8.8.8.8
+  nameserver-policy:
+    "geosite:cn": 223.5.5.5
+    "geosite:apple": 223.5.5.5
+    "siliconflow.cn": 223.5.5.5
+    "api.siliconflow.cn": 223.5.5.5
+    "bigmodel.cn": 223.5.5.5
+    "open.bigmodel.cn": 223.5.5.5
+    "geosite:netflix": 1.1.1.1
+    # 【回落】国内 DNS 放在
+  fallback:
+    - 223.5.5.5
+    - 119.29.29.29
+proxies:
+  - name: PROXY
+    type: vless
+    server: 202.91.34.226
+    port: 24844
+    uuid: 35ba08c1-9a82-4608-a64e-5d23587503b8
+    network: tcp
+    udp: true
+    tls: true
+    servername: www.amazon.com
+    client-fingerprint: chrome
+    reality-opts:
+      public-key: 89otapwMg_BjUj8GjnGK_W25xLKr_as5xtIOwhFYxV8
+      short-id: a673
+proxy-groups:
+  - name: GROUPS
+    type: select
+    proxies:
+      - PROXY
+      - DIRECT
+rules:
+  # WeChat
+  - DOMAIN-SUFFIX,wechat.com,DIRECT
+  - DOMAIN-SUFFIX,wechatimg.com,DIRECT
+  - DOMAIN-SUFFIX,weixin.com,DIRECT
+  - DOMAIN-SUFFIX,weixin.qq.com,DIRECT
+  - DOMAIN-SUFFIX,qpic.cn,DIRECT
+  - DOMAIN-SUFFIX,qlogo.cn,DIRECT
+  - DOMAIN-SUFFIX,wx.qlogo.cn,DIRECT
+  - DOMAIN-SUFFIX,wx.qq.com,DIRECT
+  - DOMAIN-SUFFIX,wx2.qq.com,DIRECT
+  - DOMAIN-SUFFIX,servicewechat.com,DIRECT
+  - DOMAIN-KEYWORD,tencent,DIRECT
+  - DOMAIN-KEYWORD,gtimg,DIRECT
+  # Bilibili
+  - DOMAIN-SUFFIX,bilibili.com,DIRECT
+  - DOMAIN-SUFFIX,biliapi.com,DIRECT
+  - DOMAIN-SUFFIX,biliapi.net,DIRECT
+  - DOMAIN-SUFFIX,hdslb.com,DIRECT
+  - DOMAIN-KEYWORD,bilibili,DIRECT
+  # Apple
+  - DOMAIN-SUFFIX,apple.com,DIRECT
+  - DOMAIN-SUFFIX,icloud.com,DIRECT
+  - DOMAIN-SUFFIX,itunes.apple.com,DIRECT
+  - DOMAIN-SUFFIX,mzstatic.com,DIRECT
+  - DOMAIN-SUFFIX,appleusercontent.com,DIRECT
+  - DOMAIN-SUFFIX,cdn-apple.com,DIRECT
+  - DOMAIN-KEYWORD,icloud,DIRECT
+  # 无插件直播
+  - DOMAIN-SUFFIX,wtmdjxkq.com,DIRECT
+  - DOMAIN-SUFFIX,wuchajian.xyz,DIRECT
+  - DOMAIN-SUFFIX,yoozb.live,DIRECT
+  - DOMAIN-SUFFIX,sjb2026.org,DIRECT
+  # 咪咕视频
+  - DOMAIN-SUFFIX,migu.cn,DIRECT
+  - DOMAIN-SUFFIX,miguvideo.com,DIRECT
+  - DOMAIN-SUFFIX,cmvideo.cn,DIRECT
+  - DOMAIN,sdc3.10086.cn,DIRECT
+  # 游侠星空
+  - DOMAIN-SUFFIX,gamersky.com,DIRECT
+  - DOMAIN-SUFFIX,gamersky.net,DIRECT
+  # 国内直连
+  - GEOIP,CN,DIRECT
+  # 投屏直连
+  - GEOIP,LAN,DIRECT
+  # Netflix
+  - DOMAIN-SUFFIX,netflix.com,PROXY
+  - DOMAIN-SUFFIX,nflxvideo.net,PROXY
+  # YouTube
+  - DOMAIN-SUFFIX,youtube.com,PROXY
+  - DOMAIN-SUFFIX,googlevideo.com,PROXY
+  - DOMAIN-SUFFIX,ytimg.com,PROXY
+  - DOMAIN-SUFFIX,ggpht.com,PROXY
+  - DOMAIN-KEYWORD,youtube,PROXY
+  - DOMAIN-KEYWORD,google_video,PROXY
+  # ChatGPT
+  - DOMAIN-SUFFIX,openai.com,PROXY
+  - DOMAIN-SUFFIX,chatgpt.com,PROXY
+  # 拦截广告与数据上报
+  - DOMAIN,tk.anythinktech.com,REJECT
+  - DOMAIN-keyword,pangolin-sdk,REJECT
+  - DOMAIN-SUFFIX,hookspf.com,REJECT
+  # 广告拦截
+  - DOMAIN-SUFFIX,doubleclick.net,REJECT
+  - DOMAIN-SUFFIX,googlesyndication.com,REJECT
+  - DOMAIN-SUFFIX,adservice.google.com,REJECT
+  # 默认
+  - MATCH,PROXY
