@@ -2,7 +2,7 @@ mixed-port: 2080
 allow-lan: true
 mode: rule
 log-level: info
-ipv6: false
+ipv6: true
 dns:
   enable: true
   ipv6: true
