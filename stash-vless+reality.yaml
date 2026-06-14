@@ -13,19 +13,13 @@ dns:
     - '*.local'
     - localhost.ptlogin2.qq.com
   nameserver:
-    - 8.8.8.8
+    - 223.5.5.5
+    - 119.29.29.29
   nameserver-policy:
-    "geosite:cn": 223.5.5.5
-    "geosite:apple": 223.5.5.5
     "siliconflow.cn": 223.5.5.5
     "api.siliconflow.cn": 223.5.5.5
     "bigmodel.cn": 223.5.5.5
     "open.bigmodel.cn": 223.5.5.5
-    "geosite:netflix": 1.1.1.1
-    # 【回落】国内 DNS 放在
-  fallback:
-    - 223.5.5.5
-    - 119.29.29.29
 proxies:
   - name: PROXY
     type: vless
