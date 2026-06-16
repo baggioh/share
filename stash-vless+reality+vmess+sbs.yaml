@@ -59,7 +59,7 @@ proxies:
     tls: true
     network: ws
     ws-opts:
-      path: /cb74bbb0-e85a-4aea-a902-bbb92d0483     # 👈【请对齐你面板上完整的路径】
+      path: /cb74bbb0-e85a-4aea-a902-bbb92d0482ef
       headers:
         Host: www.baggioh.sbs
 
