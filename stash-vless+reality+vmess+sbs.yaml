@@ -38,16 +38,6 @@ proxies:
       public-key: 89otapwMg_BjUj8GjnGK_W25xLKr_as5xtIOwhFYxV8
       short-id: a673
 
-  - name: 澳大利亚01
-    type: anytls
-    server: au01.shcdn.xyz
-    port: 13301
-    password: eefe25ad-e39d-4451-9117-447a2006d38b
-    client-fingerprint: chrome
-    udp: true
-    alpn: [h2, http/1.1]
-    sni: au01.shanhai.sbs
-    skip-cert-verify: false
 
   - name: "Vultr-澳大利亚-SBS"
     type: vmess
@@ -70,13 +60,11 @@ proxy-groups:
     proxies:
       - PROXY
       - "Vultr-澳大利亚-SBS"
-      - 澳大利亚01
       - DIRECT
   - name: 澳洲看球专线
     type: select
     proxies:
       - "Vultr-澳大利亚-SBS"  # 👈 现阶段把它点亮作为主力
-      - 澳大利亚01           # 👈 放在这里待命，等它恢复了可以随时切过去
       - DIRECT
 
 # 第三步：规则继续完美复用
