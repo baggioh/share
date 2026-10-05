@@ -12,6 +12,10 @@ dns:
     - '*.lan'
     - '*.local'
     - localhost.ptlogin2.qq.com
+    - '*.apple.com'
+    - '*.icloud.com'
+    - '*.apple-mapkit.com'
+    - smoot.apple.com
   nameserver:
     - 223.5.5.5
     - 119.29.29.29
@@ -41,6 +45,8 @@ proxy-groups:
       - PROXY
       - DIRECT
 rules:
+  # Seagm
+  - DOMAIN-SUFFIX,seagm.com,DIRECT
   # WeChat
   - DOMAIN-SUFFIX,wechat.com,DIRECT
   - DOMAIN-SUFFIX,wechatimg.com,DIRECT
@@ -67,6 +73,8 @@ rules:
   - DOMAIN-SUFFIX,mzstatic.com,DIRECT
   - DOMAIN-SUFFIX,appleusercontent.com,DIRECT
   - DOMAIN-SUFFIX,cdn-apple.com,DIRECT
+  - DOMAIN-SUFFIX,apple-mapkit.com,DIRECT
+  - DOMAIN-KEYWORD,smoot,DIRECT
   - DOMAIN-KEYWORD,icloud,DIRECT
   # 无插件直播
   - DOMAIN-SUFFIX,wtmdjxkq.com,DIRECT
@@ -87,7 +95,13 @@ rules:
   - GEOIP,LAN,DIRECT
   # Netflix
   - DOMAIN-SUFFIX,netflix.com,PROXY
+  - DOMAIN-SUFFIX,netflix.net,PROXY
+  - DOMAIN-SUFFIX,nflximg.net,PROXY
+  - DOMAIN-SUFFIX,nflximg.com,PROXY
   - DOMAIN-SUFFIX,nflxvideo.net,PROXY
+  - DOMAIN-SUFFIX,nflxext.com,PROXY
+  - DOMAIN-SUFFIX,nflxso.net,PROXY
+  - DOMAIN-KEYWORD,netflix,PROXY
   # YouTube
   - DOMAIN-SUFFIX,youtube.com,PROXY
   - DOMAIN-SUFFIX,googlevideo.com,PROXY
