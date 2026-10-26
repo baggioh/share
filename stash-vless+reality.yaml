@@ -28,7 +28,7 @@ proxies:
   - name: PROXY
     type: vless
     server: 202.91.34.226
-    port: 24844
+    port: 46389
     uuid: 35ba08c1-9a82-4608-a64e-5d23587503b8
     network: tcp
     udp: true
