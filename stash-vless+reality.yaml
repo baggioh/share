@@ -28,7 +28,7 @@ proxies:
   - name: PROXY
     type: vless
     server: 202.91.34.226
-    port: 46390
+    port: 46391
     uuid: 35ba08c1-9a82-4608-a64e-5d23587503b8
     network: tcp
     udp: true
@@ -36,7 +36,7 @@ proxies:
     servername: www.amazon.com
     client-fingerprint: chrome
     reality-opts:
-      public-key: 89otapwMg_BjUj8GjnGK_W25xLKr_as5xtIOwhFYxV8
+      public-key: FnJMpsgkhDpqRDrO-ARTclPDa8oifsbjk56_U6HOBV0
       short-id: a673
 proxy-groups:
   - name: GROUPS
