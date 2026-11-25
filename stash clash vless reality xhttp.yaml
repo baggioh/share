@@ -76,6 +76,11 @@ rules:
   # 无插件直播
   - DOMAIN-SUFFIX,wtmdjxkq.com,DIRECT
   - DOMAIN-SUFFIX,wuchajian.xyz,DIRECT
+  - DOMAIN-SUFFIX,wuchajian.tv,DIRECT
+  - DOMAIN-SUFFIX,wuchajian.me,DIRECT
+  - DOMAIN-SUFFIX,wuchajian.xyz,DIRECT
+  - DOMAIN-SUFFIX,zhibome.net,DIRECT
+  - DOMAIN-SUFFIX,livezhibomi.xyz,DIRECT
   - DOMAIN-SUFFIX,yoozb.live,DIRECT
   - DOMAIN-SUFFIX,sjb2026.org,DIRECT
   # 咪咕视频
